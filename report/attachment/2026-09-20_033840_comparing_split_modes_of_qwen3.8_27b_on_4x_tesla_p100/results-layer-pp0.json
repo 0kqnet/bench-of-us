@@ -1,0 +1,30 @@
+{
+  "tag": "layer",
+  "pp512": {
+    "prompt_n": 512,
+    "cache_n": 0,
+    "prompt_ms": 3956.769,
+    "prompt_per_second": 129.3985067109048,
+    "predicted_n": 64,
+    "predicted_per_second": 20.139338649692508,
+    "wall_s": 7.22
+  },
+  "pp2048": {
+    "prompt_n": 1978,
+    "cache_n": 0,
+    "prompt_ms": 10119.545,
+    "prompt_per_second": 195.46333357873303,
+    "predicted_n": 64,
+    "predicted_per_second": 20.740570036460603,
+    "wall_s": 13.17
+  },
+  "pp8192": {
+    "prompt_n": 8077,
+    "cache_n": 0,
+    "prompt_ms": 36215.687,
+    "prompt_per_second": 223.02490078401664,
+    "predicted_n": 64,
+    "predicted_per_second": 19.536925253894747,
+    "wall_s": 39.47
+  }
+}
