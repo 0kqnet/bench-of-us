@@ -4,6 +4,15 @@
 
 「この GPU の組み合わせでこのモデルはどれくらい出るのか」「マルチ GPU は layer 分割と tensor 分割のどちらが速いのか」を、実機の記録として集めます。
 
+## Website
+
+Bench of Us は、ブラウズできるベンチマークデータベースとしても公開しています。
+
+https://jimoto-no-llm.github.io/bench-of-us/
+
+サイトは `report/` の Markdown から自動生成されます（`site/`）。レポートを追加する手順は今までどおりで、
+main にマージされると GitHub Actions がサイトを再生成します。サイト向けの追加作業は不要です。
+
 ## 参加方法
 
 1. このリポジトリを fork して clone します。
