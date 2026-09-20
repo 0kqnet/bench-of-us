@@ -1,2 +1,3 @@
-src/
+# リポジトリ直下のベンチマークツール clone 先（site/src は対象外）
+/src/
 .author

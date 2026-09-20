@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import ReportCard from '../components/ReportCard.astro';
+import { getReports, gpuLabel, summarize, UNKNOWN } from '../lib/reports';
+
+const reports = await getReports();
+const stats = summarize(reports);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const repo = 'https://github.com/jimoto-no-llm/bench-of-us';
+
+const uniq = (values: (string | undefined)[]) =>
+  [...new Set(values.filter((v): v is string => !!v && v !== UNKNOWN))].sort();
+
+const gpus = uniq(reports.map((r) => r.gpu));
+const gpuCounts = [...new Set(reports.map((r) => r.gpuCount).filter((n): n is number => !!n))].sort((a, b) => a - b);
+const models = uniq(reports.map((r) => r.model));
+const authors = uniq(reports.map((r) => r.author));
+---
+
+<Base>
+  <section class="hero">
+    <h1>Bench of Us</h1>
+    <p class="tagline">Community Local LLM Benchmark Database</p>
+    <p class="lead">
+      実機で測ったローカル LLM の性能を、GPU・モデル・構成ごとに共有するコミュニティベンチマーク。
+      レポートは GitHub の <code>report/</code> に Markdown で置かれ、このサイトはそこから自動生成されます。
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#explorer">Browse benchmarks</a>
+      <a class="btn" href={`${base}/contribute/`}>Submit a report</a>
+      <a class="btn" href={repo} rel="noopener noreferrer">GitHub</a>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="サマリ">
+    <div class="stat"><div class="label">Reports</div><div class="value">{stats.reports}</div></div>
+    <div class="stat"><div class="label">GPU setups</div><div class="value">{stats.gpuSetups}</div></div>
+    <div class="stat"><div class="label">Models</div><div class="value">{stats.models}</div></div>
+    <div class="stat"><div class="label">Contributors</div><div class="value">{stats.contributors}</div></div>
+  </section>
+
+  <section id="explorer">
+    <h2 class="section-title">Benchmark Explorer</h2>
+    <p class="section-note">
+      GPU・モデル・作成者・マシン名で絞り込めます。条件（モデル / コンテキスト長 / GPU 枚数 / split mode）が
+      レポートごとに違うため、横断した順位付けはしていません。数値は
+      <a href={`${base}/results/`}>Performance Explorer</a> で条件ごとに並べています。
+    </p>
+
+    <div class="filters">
+      <label class="sr-only" for="q">フリーワード検索</label>
+      <input id="q" type="search" placeholder="GPU / モデル / 作成者 / マシン名で検索" autocomplete="off" />
+      <select id="f-gpu" aria-label="GPU"><option value="">GPU: すべて</option>{gpus.map((v) => <option value={v}>{v}</option>)}</select>
+      <select id="f-count" aria-label="GPU 枚数"><option value="">枚数: すべて</option>{gpuCounts.map((v) => <option value={String(v)}>{v} 枚</option>)}</select>
+      <select id="f-model" aria-label="モデル"><option value="">Model: すべて</option>{models.map((v) => <option value={v}>{v}</option>)}</select>
+      <select id="f-author" aria-label="作成者"><option value="">Author: すべて</option>{authors.map((v) => <option value={v}>{v}</option>)}</select>
+    </div>
+
+    <p class="result-count" id="count" aria-live="polite">{reports.length} reports</p>
+
+    <div class="cards" id="cards">
+      {reports.map((report) => <ReportCard report={report} />)}
+    </div>
+    <p class="empty" id="empty" hidden>条件に一致するレポートがありません。</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Latest hardware</h2>
+    <p class="section-note">レポートに登場するハードウェア構成。</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>日付</th><th>GPU</th><th>枚数</th><th>コンピュータ / マザーボード</th><th>モデル</th><th>作成者</th></tr>
+        </thead>
+        <tbody>
+          {reports.map((r) => (
+            <tr>
+              <td>{r.date}</td>
+              <td>{r.gpu}</td>
+              <td align="right">{r.gpuCount ?? '-'}</td>
+              <td>{r.machine}</td>
+              <td>{r.model}</td>
+              <td>{r.author}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  const q = document.querySelector<HTMLInputElement>('#q');
+  const selects = ['f-gpu', 'f-count', 'f-model', 'f-author'].map((id) =>
+    document.getElementById(id) as HTMLSelectElement | null,
+  );
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-report]')];
+  const count = document.getElementById('count');
+  const empty = document.getElementById('empty');
+
+  const apply = () => {
+    const terms = (q?.value ?? '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const [gpu, gpuCount, model, author] = selects.map((s) => s?.value ?? '');
+    let visible = 0;
+
+    for (const card of cards) {
+      const d = card.dataset;
+      const match =
+        terms.every((term) => (d.search ?? '').includes(term)) &&
+        (gpu === '' || d.gpu === gpu) &&
+        (gpuCount === '' || d.gpuCount === gpuCount) &&
+        (model === '' || d.model === model) &&
+        (author === '' || d.author === author);
+      card.hidden = !match;
+      if (match) visible += 1;
+    }
+
+    if (count) count.textContent = `${visible} / ${cards.length} reports`;
+    if (empty) empty.hidden = visible !== 0;
+  };
+
+  q?.addEventListener('input', apply);
+  for (const select of selects) select?.addEventListener('change', apply);
+  apply();
+</script>

@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getReports, gpuLabel, GITHUB_BLOB } from '../../lib/reports';
+
+const reports = await getReports();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="Reports — Bench of Us" description="Bench of Us に集まったローカル LLM ベンチマークレポートの一覧。">
+  <section>
+    <h2 class="section-title" style="margin-top:2rem">Reports</h2>
+    <p class="section-note">新しいものが上です。全 {reports.length} 件。</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>日付</th><th>タイトル</th><th>作成者</th><th>コンピュータ / マザーボード</th><th>GPU</th><th>モデル</th><th>ベンチ</th><th>元 Markdown</th></tr>
+        </thead>
+        <tbody>
+          {reports.map((r) => (
+            <tr>
+              <td>{r.date}</td>
+              <td style="white-space:normal;min-width:18rem"><a href={`${base}/reports/${r.slug}/`}>{r.title}</a></td>
+              <td>{r.author}</td>
+              <td>{r.machine}</td>
+              <td>{gpuLabel(r)}</td>
+              <td>{r.model}</td>
+              <td>{r.hasBenchmark ? r.benchmark : '未実施'}</td>
+              <td><a href={`${GITHUB_BLOB}/report/${r.file}`} rel="noopener noreferrer">GitHub</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {reports.length === 0 && <p class="empty">レポートがまだありません。</p>}
+  </section>
+</Base>
