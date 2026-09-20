@@ -1,0 +1,30 @@
+---
+import { gpuLabel, searchIndex, type Report } from '../lib/reports';
+
+interface Props { report: Report }
+const { report } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<article
+  class="card"
+  data-report
+  data-search={searchIndex(report)}
+  data-gpu={report.gpu}
+  data-gpu-count={report.gpuCount ?? ''}
+  data-model={report.model}
+  data-author={report.author}
+>
+  <p class="meta">{report.date} ・ {report.author}</p>
+  <h3><a href={`${base}/reports/${report.slug}/`}>{report.title}</a></h3>
+  {report.summary && <p class="summary">{report.summary}</p>}
+  <dl>
+    <dt>GPU</dt><dd>{gpuLabel(report)}</dd>
+    <dt>Machine</dt><dd>{report.machine}</dd>
+    <dt>Model</dt><dd>{report.model}</dd>
+    <dt>Bench</dt><dd>{report.hasBenchmark ? report.benchmark : '未実施'}</dd>
+  </dl>
+  {report.tags.length > 0 && (
+    <div class="tags">{report.tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+  )}
+</article>

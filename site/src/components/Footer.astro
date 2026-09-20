@@ -1,0 +1,19 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const repo = 'https://github.com/jimoto-no-llm/bench-of-us';
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <strong>Bench of Us</strong>
+    <p>
+      Community-maintained local LLM benchmark database.<br />
+      レポートの正本は GitHub リポジトリの <code>report/</code> にあります。
+    </p>
+    <p>
+      <a href={repo} rel="noopener noreferrer">View on GitHub</a>
+      ・<a href={`${repo}/blob/main/LICENSE`} rel="noopener noreferrer">License</a>
+      ・<a href={`${base}/contribute/`}>Contribute</a>
+    </p>
+  </div>
+</footer>

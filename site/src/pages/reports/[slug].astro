@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getReports, gpuLabel, type Report } from '../../lib/reports';
+import { renderMarkdown } from '../../lib/markdown';
+
+export async function getStaticPaths() {
+  const reports = await getReports();
+  return reports.map((report, index) => ({
+    params: { slug: report.slug },
+    props: {
+      report,
+      prev: reports[index + 1] ?? null,
+      next: reports[index - 1] ?? null,
+    },
+  }));
+}
+
+interface Props { report: Report; prev: Report | null; next: Report | null }
+const { report, prev, next } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const html = await renderMarkdown(report.body, { base, slug: report.slug });
+
+const facts: [string, string][] = [
+  ['作成者', report.author],
+  ['作成日', report.date],
+  ['コンピュータ / マザーボード', report.machine],
+  ['GPU', gpuLabel(report)],
+  ['モデル', report.model],
+  ['バックエンド', report.backend],
+  ['ベンチマーク', report.hasBenchmark ? report.benchmark : '未実施'],
+];
+
+const description = report.summary
+  ? report.summary.slice(0, 150)
+  : `${gpuLabel(report)} / ${report.model} のローカル LLM ベンチマークレポート。`;
+---
+
+<Base title={`${report.title} — Bench of Us`} description={description}>
+  <article>
+    <header class="report-head">
+      <p class="meta"><span>{report.date}</span><span>{report.author}</span><span>{gpuLabel(report)}</span></p>
+      <h1>{report.title}</h1>
+      {report.summary && <p style="color:var(--fg-muted);max-width:52rem">{report.summary}</p>}
+      <dl class="report-facts">
+        {facts.map(([label, value]) => (
+          <div><dt>{label}</dt><dd>{value}</dd></div>
+        ))}
+      </dl>
+      {report.tags.length > 0 && <div class="tags">{report.tags.map((tag) => <span class="tag">{tag}</span>)}</div>}
+      <div class="actions">
+        <a class="btn" href={report.githubUrl} rel="noopener noreferrer">元の Markdown を GitHub で見る</a>
+      </div>
+    </header>
+
+    <div class="prose" set:html={html} />
+
+    <nav class="report-nav">
+      <a class="btn" href={`${base}/reports/`}>← すべてのレポート</a>
+      {prev && <a class="btn" href={`${base}/reports/${prev.slug}/`}>前のレポート: {prev.title}</a>}
+      {next && <a class="btn" href={`${base}/reports/${next.slug}/`}>次のレポート: {next.title}</a>}
+    </nav>
+  </article>
+</Base>

@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+
+const repo = 'https://github.com/jimoto-no-llm/bench-of-us';
+---
+
+<Base
+  title="Contribute — Bench of Us"
+  description="Bench of Us にローカル LLM のベンチマークレポートを追加する手順。"
+>
+  <section>
+    <h2 class="section-title" style="margin-top:2rem">Contribute</h2>
+    <p class="section-note">レポートの正本は GitHub リポジトリの <code>report/</code> です。このサイトはそこから自動生成されます。</p>
+
+    <div class="prose">
+      <h3>手順</h3>
+      <ol>
+        <li>リポジトリを fork して clone する</li>
+        <li>（任意）手元でベンチマークを実行する。ツールは <a href="https://github.com/kuraneko1/llama-split-bench" rel="noopener noreferrer">llama-split-bench</a></li>
+        <li><code>report/yyyy-mm-dd_HHMMSS_&lt;英訳タイトル&gt;.md</code> を 1 本追加する</li>
+        <li>図や JSON は <code>report/attachment/&lt;レポートの basename&gt;/</code> に置く</li>
+        <li><a href={`${repo}/blob/main/README.md`} rel="noopener noreferrer">README</a> のレポート一覧に 1 行追加する</li>
+        <li>pull request を作成する</li>
+      </ol>
+      <p>
+        ベンチマークを取らず、ハードウェア情報だけを共有するレポートも歓迎です。その場合もベンチマークの節は省かず「未実施」と明記します。
+      </p>
+
+      <h3>サイトへの反映</h3>
+      <p>
+        PR が main にマージされると GitHub Actions がこのサイトを再生成します。
+        レポート側で特別な作業は不要です。frontmatter を書いた場合はそれが優先され、無い場合は本文の表と箇条書きから
+        作成者・日付・マシン・GPU・モデルを読み取ります。
+      </p>
+      <p>frontmatter を使う場合の例:</p>
+      <pre><code>---
+author: miminashi
+date: 2026-09-20
+machine: Supermicro SYS-4028GR-TRT2
+gpu: Tesla P100-PCIE-16GB
+gpu_count: 7
+model: Qwen3.8-27B-UD-Q4_K_XL
+backend: llama.cpp
+benchmark: llama-split-bench
+tags:
+  - p100
+  - qwen3.8
+  - multi-gpu
+---</code></pre>
+
+      <h3>注意</h3>
+      <ul>
+        <li>シリアル番号・MAC アドレス・ホスト名・IP アドレスなど、個人を特定しうる情報は載せない</li>
+        <li>モデルファイル（<code>.gguf</code>）やサーバログはコミットしない</li>
+        <li>他の人のレポートは編集しない</li>
+      </ul>
+
+      <p>
+        詳しい手順は <a href={`${repo}/blob/main/CLAUDE.md`} rel="noopener noreferrer">CLAUDE.md</a> にあります。
+      </p>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-primary" href={`${repo}/fork`} rel="noopener noreferrer">Fork して参加する</a>
+      <a class="btn" href={repo} rel="noopener noreferrer">GitHub リポジトリ</a>
+    </div>
+  </section>
+</Base>

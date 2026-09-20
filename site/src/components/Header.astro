@@ -1,0 +1,26 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname.replace(/\/$/, '');
+const links = [
+  { href: `${base}/`, label: 'Benchmarks' },
+  { href: `${base}/reports/`, label: 'Reports' },
+  { href: `${base}/results/`, label: 'Results' },
+  { href: `${base}/contribute/`, label: 'Contribute' },
+  { href: 'https://github.com/jimoto-no-llm/bench-of-us', label: 'GitHub', external: true },
+];
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href={`${base}/`}>Bench of Us</a>
+    <nav class="site-nav" aria-label="サイト">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+          aria-current={!link.external && path === link.href.replace(/\/$/, '') ? 'page' : undefined}
+        >{link.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>

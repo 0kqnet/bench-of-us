@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.astro/
+# report/attachment から sync:assets で生成されるコピー
+public/report-assets/

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import { getReports, gpuLabel } from '../lib/reports';
+
+const reports = (await getReports()).filter((r) => r.benchTable);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base
+  title="Performance Explorer — Bench of Us"
+  description="レポートから抽出した depth ごとの prefill / decode 速度を、測定条件つきで並べたページ。"
+>
+  <section>
+    <h2 class="section-title" style="margin-top:2rem">Performance Explorer</h2>
+    <p class="section-note">
+      各レポートの結果表を、測定条件（モデル / GPU / 枚数 / split mode）とあわせて並べています。
+      条件が違う測定を 1 列に並べた順位付けは、誤解を招くので行いません。比較する場合は条件が一致していることを確認してください。
+    </p>
+
+    {reports.length === 0 && <p class="empty">構造化できるベンチマーク結果表がまだありません。</p>}
+
+    {reports.map((report) => (
+      <div class="bench-group">
+        <h3><a href={`${base}/reports/${report.slug}/`}>{report.title}</a></h3>
+        <p class="cond">
+          {report.date} ・ {report.author} ・ {gpuLabel(report)} ・ {report.model} ・ {report.machine}
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>depth</th>
+                {report.benchTable!.columns.map((column) => <th align="right">{column}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {report.benchTable!.rows.map((row) => (
+                <tr>
+                  <td>{row.depth}</td>
+                  {report.benchTable!.columns.map((column) => (
+                    <td align="right">{row.values[column] ?? '-'}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ))}
+  </section>
+</Base>
