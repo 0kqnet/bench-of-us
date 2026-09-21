@@ -1,0 +1,35 @@
+{
+  "tag": "full_20260921_qwen38_27b_split_nccl",
+  "date": "2026-09-21T18:24:29+09:00",
+  "ctx": 131072,
+  "stages": "0,32000,64000,128000",
+  "n_predict": 1000,
+  "modes": [
+    {
+      "name": "layer",
+      "device": "CUDA0,CUDA1",
+      "split": "layer",
+      "argv_file": "argv-layer.txt"
+    },
+    {
+      "name": "tensor",
+      "device": "CUDA0,CUDA1",
+      "split": "tensor",
+      "argv_file": "argv-tensor.txt"
+    },
+    {
+      "name": "single_v100",
+      "device": "CUDA0",
+      "split": "",
+      "argv_file": "argv-single_v100.txt"
+    }
+  ],
+  "machine": "Thirdwave XA7C-R47T — RTX 3060 + Tesla V100-PCIE-32GB",
+  "bin": "~/dev/tools/llama.cpp/build-nccl-70-86/bin/llama-server",
+  "bin_version": "version: 0.3.0-dev (build 1, commit 5ea1b12) built with GNU 15.2.0 for Linux x86_64",
+  "bin_sha256": "b92cdf4d9aa33f45110f102c45095ca3dfff6a9125183026174f367a8eec37e9",
+  "cache_k": "q8_0",
+  "cache_v": "q8_0",
+  "launch_prefix": "",
+  "tensor_split": ""
+}
