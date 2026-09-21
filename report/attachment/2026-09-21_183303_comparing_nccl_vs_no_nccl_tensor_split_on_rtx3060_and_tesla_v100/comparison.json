@@ -1,0 +1,196 @@
+{
+  "rows": [
+    {
+      "depth": 0,
+      "mode": "single_v100",
+      "metric": "prefill",
+      "no_nccl": 41.04462296782475,
+      "nccl": 38.94811756666324,
+      "delta_pct": -5.107868581969866
+    },
+    {
+      "depth": 0,
+      "mode": "single_v100",
+      "metric": "decode",
+      "no_nccl": 32.44022061298379,
+      "nccl": 32.384517749795336,
+      "delta_pct": -0.17170926133022743
+    },
+    {
+      "depth": 32000,
+      "mode": "single_v100",
+      "metric": "prefill",
+      "no_nccl": 636.1991634634188,
+      "nccl": 636.3864023700312,
+      "delta_pct": 0.029430863378232797
+    },
+    {
+      "depth": 32000,
+      "mode": "single_v100",
+      "metric": "decode",
+      "no_nccl": 26.838756378536722,
+      "nccl": 26.832853802391316,
+      "delta_pct": -0.0219927334268225
+    },
+    {
+      "depth": 64000,
+      "mode": "single_v100",
+      "metric": "prefill",
+      "no_nccl": 430.61534776391295,
+      "nccl": 430.8761192710327,
+      "delta_pct": 0.0605578757175875
+    },
+    {
+      "depth": 64000,
+      "mode": "single_v100",
+      "metric": "decode",
+      "no_nccl": 22.354676977714803,
+      "nccl": 22.343633815620333,
+      "delta_pct": -0.04939978379235381
+    },
+    {
+      "depth": 128000,
+      "mode": "single_v100",
+      "metric": "prefill",
+      "no_nccl": 290.748449520039,
+      "nccl": 290.8032636027253,
+      "delta_pct": 0.018852751502807186
+    },
+    {
+      "depth": 128000,
+      "mode": "single_v100",
+      "metric": "decode",
+      "no_nccl": 16.328867243759454,
+      "nccl": 16.32507415856948,
+      "delta_pct": -0.02322932223866009
+    },
+    {
+      "depth": 0,
+      "mode": "layer",
+      "metric": "prefill",
+      "no_nccl": 39.507804587215276,
+      "nccl": 39.21862242806057,
+      "delta_pct": -0.7319621076800735
+    },
+    {
+      "depth": 0,
+      "mode": "layer",
+      "metric": "decode",
+      "no_nccl": 26.812803153765387,
+      "nccl": 26.854536957084733,
+      "delta_pct": 0.15564878867760298
+    },
+    {
+      "depth": 32000,
+      "mode": "layer",
+      "metric": "prefill",
+      "no_nccl": 830.133367897866,
+      "nccl": 830.0009457867632,
+      "delta_pct": -0.01595190799741006
+    },
+    {
+      "depth": 32000,
+      "mode": "layer",
+      "metric": "decode",
+      "no_nccl": 22.231966603713925,
+      "nccl": 22.296821718630987,
+      "delta_pct": 0.29172009868991045
+    },
+    {
+      "depth": 64000,
+      "mode": "layer",
+      "metric": "prefill",
+      "no_nccl": 573.5172024179855,
+      "nccl": 573.1436138107999,
+      "delta_pct": -0.0651399130855101
+    },
+    {
+      "depth": 64000,
+      "mode": "layer",
+      "metric": "decode",
+      "no_nccl": 18.58871048998892,
+      "nccl": 18.586669986343914,
+      "delta_pct": -0.010977112404352469
+    },
+    {
+      "depth": 128000,
+      "mode": "layer",
+      "metric": "prefill",
+      "no_nccl": 394.58211797252847,
+      "nccl": 394.3834870365797,
+      "delta_pct": -0.050339568597121624
+    },
+    {
+      "depth": 128000,
+      "mode": "layer",
+      "metric": "decode",
+      "no_nccl": 13.690126628600899,
+      "nccl": 13.693506643324561,
+      "delta_pct": 0.024689433599546316
+    },
+    {
+      "depth": 0,
+      "mode": "tensor",
+      "metric": "prefill",
+      "no_nccl": 37.42171207734727,
+      "nccl": 37.142712430990535,
+      "delta_pct": -0.7455555367965817
+    },
+    {
+      "depth": 0,
+      "mode": "tensor",
+      "metric": "decode",
+      "no_nccl": 32.249278725028155,
+      "nccl": 29.29876185016138,
+      "delta_pct": -9.149094155017258
+    },
+    {
+      "depth": 32000,
+      "mode": "tensor",
+      "metric": "prefill",
+      "no_nccl": 582.462247397178,
+      "nccl": 630.4290355109539,
+      "delta_pct": 8.235175468989258
+    },
+    {
+      "depth": 32000,
+      "mode": "tensor",
+      "metric": "decode",
+      "no_nccl": 27.266732760062332,
+      "nccl": 25.078738830139347,
+      "delta_pct": -8.024408164984646
+    },
+    {
+      "depth": 64000,
+      "mode": "tensor",
+      "metric": "prefill",
+      "no_nccl": 452.9217370756944,
+      "nccl": 491.99119210062526,
+      "delta_pct": 8.626094052624676
+    },
+    {
+      "depth": 64000,
+      "mode": "tensor",
+      "metric": "decode",
+      "no_nccl": 23.15637903770526,
+      "nccl": 21.587967217148304,
+      "delta_pct": -6.773130712721234
+    },
+    {
+      "depth": 128000,
+      "mode": "tensor",
+      "metric": "prefill",
+      "no_nccl": 340.3851573790286,
+      "nccl": 370.95901953629703,
+      "delta_pct": 8.982137291968801
+    },
+    {
+      "depth": 128000,
+      "mode": "tensor",
+      "metric": "decode",
+      "no_nccl": 17.823562785685485,
+      "nccl": 16.898977136546645,
+      "delta_pct": -5.187434522807062
+    }
+  ]
+}
