@@ -24,7 +24,7 @@ main にマージされると GitHub Actions がサイトを再生成します�
 
 ### Claude Code 等のコーディングエージェントを使う場合
 
-Claude Code、Codex、OpenCodeなどのコーディングエージェントを使用する場合は、リポジトリのルートでコーディングエージェントを起動し、「レポートを作って」と頼んでください。
+Claude Code、Codex、OpenCodeなどのコーディングエージェントを使用する場合は、リポジトリのルートでコーディングエージェントを起動し、「ベンチマークを実行して」と頼んでください。
 [CLAUDE.md](CLAUDE.md) の手順に従って、作成者名の確認・ハードウェアの調査・ベンチマークの実行・レポートの作成・PR の作成までを進めます。
 
 ### 手で書く場合
@@ -44,6 +44,7 @@ Claude Code、Codex、OpenCodeなどのコーディングエージェントを�
 
 | 日付 | タイトル | 作成者 | コンピュータ / マザーボード | GPU | ベンチ |
 |------|----------|--------|-----------------------------|-----|--------|
+| 2026-09-23 | [Tesla V100 2 枚で Qwen3.8 27B の split-mode を比較](report/2026-09-23_060231_comparing_split_modes_of_qwen3.8_27b_on_2x_tesla_v100.md) | miminashi | ASRock X99 Taichi | Tesla V100-SXM2-16GB × 2 | Huihui Qwen3.8 27B abliterated UD-Q4_K_XL |
 | 2026-09-22 | [Tesla V100 2枚で Qwen3.8 27B の split-mode を比較（単一GPU ベースライン付き）](report/2026-09-22_210206_comparing_split_modes_of_qwen3.8_27b_on_2x_tesla_v100_with_single_gpu_baseline.md) | kuraneko1 | ASUS Z170-A | Tesla V100-PCIE-32GB + Tesla PG500-216 | Qwen3.8 27B UD-Q4_K_M |
 | 2026-09-21 | [RTX 3060 + Tesla V100 で Qwen3.8 27B の tensor split を NCCL あり／なしで比較](report/2026-09-21_183303_comparing_nccl_vs_no_nccl_tensor_split_on_rtx3060_and_tesla_v100.md) | eightman999 | Thirdwave XA7C-R47T / ASRock B760 TW/D4 | RTX 3060 12GB + Tesla V100-PCIE-32GB | Qwen3.8 27B Q4_K_M NCCL |
 | 2026-09-21 | [RTX 3060 + Tesla V100 で Qwen3.8 27B の split-mode を比較](report/2026-09-21_170911_comparing_split_modes_of_qwen3.8_27b_on_rtx3060_and_tesla_v100.md) | eightman999 | Thirdwave XA7C-R47T / ASRock B760 TW/D4 | RTX 3060 12GB + Tesla V100-PCIE-32GB | Qwen3.8 27B Q4_K_M |
