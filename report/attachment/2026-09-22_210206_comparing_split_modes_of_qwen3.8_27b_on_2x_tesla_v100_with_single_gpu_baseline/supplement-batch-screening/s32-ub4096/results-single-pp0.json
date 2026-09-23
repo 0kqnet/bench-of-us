@@ -1,0 +1,30 @@
+{
+  "tag": "single",
+  "pp512": {
+    "prompt_n": 512,
+    "cache_n": 0,
+    "prompt_ms": 842.476,
+    "prompt_per_second": 607.7324457907406,
+    "predicted_n": 64,
+    "predicted_per_second": 61.44477139131444,
+    "wall_s": 1.97
+  },
+  "pp2048": {
+    "prompt_n": 1978,
+    "cache_n": 0,
+    "prompt_ms": 2288.219,
+    "prompt_per_second": 864.4277492670063,
+    "predicted_n": 64,
+    "predicted_per_second": 60.70732708529668,
+    "wall_s": 3.33
+  },
+  "pp8192": {
+    "prompt_n": 8077,
+    "cache_n": 0,
+    "prompt_ms": 9071.889,
+    "prompt_per_second": 890.332763110307,
+    "predicted_n": 64,
+    "predicted_per_second": 57.94259636175679,
+    "wall_s": 10.17
+  }
+}
