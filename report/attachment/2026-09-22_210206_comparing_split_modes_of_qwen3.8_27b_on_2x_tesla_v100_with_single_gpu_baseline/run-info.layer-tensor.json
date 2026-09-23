@@ -1,0 +1,29 @@
+{
+  "tag": "ub2048-27b-262k-20260922",
+  "date": "2026-09-22T17:58:47+09:00",
+  "ctx": 262144,
+  "stages": "0,32000,64000,128000,196000,258000",
+  "n_predict": 1000,
+  "modes": [
+    {
+      "name": "layer",
+      "device": "CUDA0,CUDA1",
+      "split": "layer",
+      "argv_file": "argv-layer.txt"
+    },
+    {
+      "name": "tensor",
+      "device": "CUDA0,CUDA1",
+      "split": "tensor",
+      "argv_file": "argv-tensor.txt"
+    }
+  ],
+  "machine": "ASUS Z170-A - V100-PCIE-32GB + Tesla PG500-216",
+  "bin": "~/llama.cpp/build/bin/llama-server",
+  "bin_version": "version: 0.4.0-dev (build 1, commit 8e33095) built with GNU 13.3.0 for Linux x86_64",
+  "bin_sha256": "25e345d3169033bef4ba54497415f888eabb572e0b4ca3d69967aef430c4874c",
+  "cache_k": "q8_0",
+  "cache_v": "q8_0",
+  "launch_prefix": "",
+  "tensor_split": ""
+}
