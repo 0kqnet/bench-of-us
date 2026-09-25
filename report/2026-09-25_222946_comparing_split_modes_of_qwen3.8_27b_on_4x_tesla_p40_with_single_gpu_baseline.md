@@ -13,7 +13,7 @@ GPU は電源容量（1000 W）の都合で **1 枚あたり 150 W に電力制�
 
 | 項目 | 内容 |
 |------|------|
-| コンピュータ / マザーボード | Silicon Mechanics Rackform R2504.v6（マザーボード Supermicro X10DRG-Q） |
+| コンピュータ / マザーボード | Supermicro X10DRG-Q |
 | GPU | Tesla P40 × 4（VRAM 24 GB / 枚） |
 | GPU 接続 | PCIe 3.0。GPU0 のみ x8、GPU1〜3 は x16。GPU0・1 が CPU0 側、GPU2・3 が CPU1 側（`nvidia-smi topo -m` で同じ側は PHB、反対側は SYS）。NVLink なし |
 | CPU | Intel Xeon E5-2697A v4 × 2（16 コア / 32 スレッド × 2） |
