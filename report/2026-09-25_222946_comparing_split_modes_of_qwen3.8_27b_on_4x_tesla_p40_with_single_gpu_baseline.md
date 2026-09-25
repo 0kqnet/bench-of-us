@@ -7,7 +7,7 @@
 
 Supermicro X10DRG-Q（2 ソケット）に載せた Tesla P40 × 4 で、Qwen3.8 27B UD-Q4_K_XL（MTP 投機的デコード付き）の `--split-mode layer` と `tensor` を比較しました。262k コンテキストでの本計測に加え、単一 GPU が収まる 131k コンテキストで single / layer / tensor の 3 構成も測りました。
 decode は全深度で tensor が勝ち、262k の最深段（258k）では layer の 3.0 倍（19.0 対 6.35 t/s）でした。layer の decode は単一 GPU とほぼ同じで、layer 分割で得られるのは速度ではなく VRAM でした。
-GPU は電源容量（1000 W）の都合で **1 枚あたり 150 W に電力制限**しています（P40 の標準は 250 W）。
+GPU は電源容量（1000 W）の都合で **1 枚あたり 150 W に電力制限**しています（P40 の標準は 250 W）。また、**GPU0 のみ PCIe x8 接続**です。
 
 ## ハードウェア
 
@@ -15,7 +15,7 @@ GPU は電源容量（1000 W）の都合で **1 枚あたり 150 W に電力制�
 |------|------|
 | コンピュータ / マザーボード | Silicon Mechanics Rackform R2504.v6（マザーボード Supermicro X10DRG-Q） |
 | GPU | Tesla P40 × 4（VRAM 24 GB / 枚） |
-| GPU 接続 | PCIe 3.0。GPU0 は x8（最大 x16）、GPU1〜3 は x16。GPU0・1 が CPU0 側、GPU2・3 が CPU1 側（`nvidia-smi topo -m` で同じ側は PHB、反対側は SYS）。NVLink なし |
+| GPU 接続 | PCIe 3.0。GPU0 のみ x8、GPU1〜3 は x16。GPU0・1 が CPU0 側、GPU2・3 が CPU1 側（`nvidia-smi topo -m` で同じ側は PHB、反対側は SYS）。NVLink なし |
 | CPU | Intel Xeon E5-2697A v4 × 2（16 コア / 32 スレッド × 2） |
 | メモリ | 128 GB DDR4（速度は不明） |
 | 電源 | 1000 W。これに合わせて GPU の電力上限を 150 W / 枚に設定（`nvidia-smi -pl 150`） |
@@ -104,6 +104,7 @@ single は 262k では起動できませんでした。KV キャッシュの確�
   - tensor は prefill・decode とも全体に P100 が速いです（decode は 258k で 19.0 対 23.9 t/s）。
   - llama.cpp のビルドや CPU が異なり、P40 は 150 W に制限しているので、GPU だけの差とは言えません。
 - 電源の都合で GPU を 150 W に制限しています。計測中は電力制限によるクロック抑制（SW Power Cap）がかかっていたので、250 W なら数値は変わる可能性があります。
+- GPU0 のみ PCIe x8 接続です。tensor 分割は GPU 間の通信が多いので、この影響を受けている可能性があります。
 
 ## 添付
 
